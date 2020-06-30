@@ -42,9 +42,6 @@ Definition H10p_SAT : (dio * dio) -> Prop :=
 (* many-one reduction *)
 Definition reduces {X Y} (p : X -> Prop) (q : Y -> Prop) := exists f : X -> Y, forall x, p x <-> q (f x).
 
-Theorem H10_SAT_to_H10p_SAT : reduces H10_SAT H10p_SAT.
-Proof.
-Admitted.
 
 
 (* demonstration of useful techniques *)
@@ -52,27 +49,8 @@ Admitted.
 Require Import Lia.
 Require Import ssreflect ssrfun ssrbool.
 
-(* demonstration of how to represent conjunction of Diophantine equalities *)
-Lemma encode_and (p1 q1 p2 q2: dio) : { '(p, q) | 
-  forall φ, ((eval φ p1 = eval φ q1 /\ eval φ p2 = eval φ q2)) <-> (eval φ p = eval φ q) }.
-Proof.
-  exists (
-    (dio_sum (dio_prod (dio_sum p1 p2) (dio_sum p1 p2)) p2),
-    (dio_sum (dio_prod (dio_sum q1 q2) (dio_sum q1 q2)) q2)).
-  move=> φ. constructor.
-  - by move=> /= [-> ->].
-  - move=> /=.
-    move: (eval φ p1) (eval φ p2) (eval φ q1) (eval φ q2) => a1 b1 a2 b2.
-    have [|]: a1 + b1 = a2 + b2 \/ a1 + b1 <> a2 + b2 by lia.
-    all: by nia.
-Qed.
 
-(* demonstration of how to represent disjunction of Diophantine equalities *)
-Lemma encode_or (p1 q1 p2 q2: dio) : { '(p, q) | 
-  forall φ, ((eval φ p1 = eval φ q1 \/ eval φ p2 = eval φ q2)) <-> (eval φ p = eval φ q) }.
+
+Theorem H10_SAT_to_H10p_SAT : reduces H10_SAT H10p_SAT.
 Proof.
-  exists (
-    (dio_sum (dio_prod p1 p2) (dio_prod q1 q2)),
-    (dio_sum (dio_prod p2 q1) (dio_prod p1 q2))).
-  move=> φ /=. by nia.
-Qed.
+Admitted.
