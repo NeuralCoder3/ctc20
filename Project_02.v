@@ -97,4 +97,7 @@ constructor.
   rewrite -(Hp phi) -(Hq phi) H.
   lia.
 - move => [phi H]. exists phi.
-Admitted.
+  move: H.
+  rewrite -(Hp phi) -(Hq phi).
+  lia.
+Qed.
