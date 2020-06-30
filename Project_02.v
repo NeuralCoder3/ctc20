@@ -49,8 +49,39 @@ Definition reduces {X Y} (p : X -> Prop) (q : Y -> Prop) := exists f : X -> Y, f
 Require Import Lia.
 Require Import ssreflect ssrfun ssrbool.
 
+Definition dio_two := dio_sum dio_one dio_one.
 
+Definition f' (p:dio) : 
+{ p1 & { p2 & 
+  forall phi, eval phi p + 
+    eval (fun x => S (phi x)) p2 =
+    eval (fun x => S (phi x)) p1
+}}.
+Proof.
+elim: p => [n||p [p1 [p2 IHp]] q [q1 [q2 IHq]]|p [p1 [p2 IHp]] q [q1 [q2 IHq]]].
+- exists (dio_var n); exists dio_one.
+  move => phi /=;lia.
+- exists (dio_two); exists dio_one.
+  by move => phi /=.
+Admitted.
+
+
+Definition f (pq:dio*dio) : dio*dio :=
+let (p,q) := pq in 
+let: existT _ p1 (existT _ p2 _) := f' p in 
+let: existT _ q1 (existT _ q2 _) := f' q in 
+  (dio_sum p1 q2,dio_sum q1 p2)
+.
 
 Theorem H10_SAT_to_H10p_SAT : reduces H10_SAT H10p_SAT.
 Proof.
+exists f.
+rewrite /(H10_SAT) /(H10p_SAT) /f.
+move => [] p q.
+move :(f' p) (f' q) => [p1 [p2 Hp]] [q1 [q2 Hq]] /=.
+constructor.
+- move => [phi H]. exists phi.
+  rewrite -(Hp phi) -(Hq phi) H.
+  lia.
+- move => [phi H]. exists phi.
 Admitted.
