@@ -63,7 +63,20 @@ elim: p => [n||p [p1 [p2 IHp]] q [q1 [q2 IHq]]|p [p1 [p2 IHp]] q [q1 [q2 IHq]]].
   move => phi /=;lia.
 - exists (dio_two); exists dio_one.
   by move => phi /=.
-Admitted.
+- exists (dio_sum p1 q1); exists (dio_sum p2 q2).
+  move => phi /=.
+  rewrite -(IHp phi) -(IHq phi).
+  lia.
+- exists (dio_sum 
+      (dio_prod p1 q1)
+      (dio_prod p2 q2));
+  exists (dio_sum 
+      (dio_prod p1 q2)
+      (dio_prod p2 q1)).
+  move => phi /=.
+  rewrite -(IHp phi) -(IHq phi).
+  lia.
+Defined.
 
 
 Definition f (pq:dio*dio) : dio*dio :=
