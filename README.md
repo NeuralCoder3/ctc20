@@ -66,9 +66,31 @@ The reduction function f can straightforwardly be implemented using the describe
 
 Due to the expressiveness of Coq's dependent type theory, one can directly write the function f' together with the specification.
 
-<span style="color:red">TODO: state rules of f'</span>
+We construct f' using the following rules:
+<img src="https://render.githubusercontent.com/render/math?math=(%5Cexists%20%5Cvarphi.p%5B%5Cvarphi%5D%3Dq%5B%5Cvarphi%5D)%5Cleftrightarrow%20%5Cexists%20%5Cvarphi.%20p_1%5B1%2B%5Cvarphi%5D%2Bq_2%5B1%2B%5Cvarphi%5D%3Dq_1%5B1%2B%5Cvarphi%5D%2Bp_2%5B1%2B%5Cvarphi%5D">
+<!-- \begin{align*}
+x &\mapsto (x,1) \approx x-1 \\
+1 &\mapsto (1+1,1) \approx 2-1=1 \\
+p+q &\mapsto (p_1+q_1,p_2+q2) \approx (p_1-p_2)+(q_1-q_2) \\
+p\cdot q &\mapsto (p_1\cdot q_1+p_2\cdot q_2,p_1\cdot q_2+p_2\cdot q_1) \approx (p_1-p_2)\cdot(q_1-q_2)
+\end{align*} -->
 
 ## Reduction proof
 
-<span style="color:red">TODO: Explain proof</span>
 
+In the reduction proof, one has to show that the transformed equation is positive satisfiable if and only if the original equation is satisfiable.
+The proof will be stronger, as we will show that the evaluation can be kept.
+<!-- (\exists \varphi.p[\varphi]=q[\varphi])\leftrightarrow \exists \varphi. p1[1+\varphi]+q2[1+\varphi]=q1[1+\varphi]+p2[1+\varphi] -->
+<img src="https://render.githubusercontent.com/render/math?math=(%5Cexists%20%5Cvarphi.p%5B%5Cvarphi%5D%3Dq%5B%5Cvarphi%5D)%5Cleftrightarrow%20%5Cexists%20%5Cvarphi.%20p1%5B1%2B%5Cvarphi%5D%2Bq2%5B1%2B%5Cvarphi%5D%3Dq1%5B1%2B%5Cvarphi%5D%2Bp2%5B1%2B%5Cvarphi%5D">
+
+We use the assumptions provided by the specification of the transformation:
+<!-- \begin{align*}
+\forall \varphi.~p[\varphi]+p2[1+\varphi] = p1[1+\varphi] \\
+\forall \varphi.~q[\varphi]+q2[1+\varphi] = q1[1+\varphi]
+\end{align*} -->
+<img src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0A%5Cforall%20%5Cvarphi.%20p%5B%5Cvarphi%5D%2Bp_2%5B1%2B%5Cvarphi%5D%20%26%3D%20p_1%5B1%2B%5Cvarphi%5D%20%5C%5C%0A%5Cforall%20%5Cvarphi.%20q%5B%5Cvarphi%5D%2Bq_2%5B1%2B%5Cvarphi%5D%20%26%3D%20q_1%5B1%2B%5Cvarphi%5D%0A%5Cend%7Balign*%7D%0A">
+
+The first direction from left to right is easy, as one can rewrite p1 and q1 with the two assumptions from right to left.
+With the assumption that p and q are equal under the evaluation, the goal is solvable by commutativity of addition.
+
+For the second direction from right to left, one can rewrite p1 and q1 with the two assumptions in the right hand side. By injectivity of addition, the proof is finished.
