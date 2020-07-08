@@ -67,7 +67,7 @@ The reduction function f can straightforwardly be implemented using the describe
 Due to the expressiveness of Coq's dependent type theory, one can directly write the function f' together with the specification.
 
 We construct f' using the following rules:
-<img src="https://render.githubusercontent.com/render/math?math=(%5Cexists%20%5Cvarphi.p%5B%5Cvarphi%5D%3Dq%5B%5Cvarphi%5D)%5Cleftrightarrow%20%5Cexists%20%5Cvarphi.%20p_1%5B1%2B%5Cvarphi%5D%2Bq_2%5B1%2B%5Cvarphi%5D%3Dq_1%5B1%2B%5Cvarphi%5D%2Bp_2%5B1%2B%5Cvarphi%5D">
+<img src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0Ax%20%26%5Cmapsto%20(x%2C1)%20%5Capprox%20x-1%20%5C%5C%0A1%20%26%5Cmapsto%20(1%2B1%2C1)%20%5Capprox%202-1%3D1%20%5C%5C%0Ap%2Bq%20%26%5Cmapsto%20(p_1%2Bq_1%2Cp_2%2Bq2)%20%5Capprox%20(p_1-p_2)%2B(q_1-q_2)%20%5C%5C%0Ap%5Ccdot%20q%20%26%5Cmapsto%20(p_1%5Ccdot%20q_1%2Bp_2%5Ccdot%20q_2%2Cp_1%5Ccdot%20q_2%2Bp_2%5Ccdot%20q_1)%20%5Capprox%20(p_1-p_2)%5Ccdot(q_1-q_2)%0A%5Cend%7Balign*%7D">
 <!-- \begin{align*}
 x &\mapsto (x,1) \approx x-1 \\
 1 &\mapsto (1+1,1) \approx 2-1=1 \\
